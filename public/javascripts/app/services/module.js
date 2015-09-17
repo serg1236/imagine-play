@@ -1,4 +1,4 @@
 define(['angular'], function (ng) {
     'use strict';
-    return ng.module('todo.services', []);
+    return ng.module('imagine.services', []);
 });

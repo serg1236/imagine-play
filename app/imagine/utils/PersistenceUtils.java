@@ -24,5 +24,9 @@ public class PersistenceUtils {
 		return query.getSingleResult();
 	}
 	
+	public static boolean isUserExists(User user){
+		return isUserExists(user.getFbId());
+	}
+	
 
 }

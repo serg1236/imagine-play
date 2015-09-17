@@ -1,3 +1,3 @@
 define([
-    './listitem'
+    './start-screen'
 ], function () {});

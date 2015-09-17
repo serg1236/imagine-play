@@ -1,9 +1,46 @@
 <!doctype html>
 <html>
 <head>
-	<title>Todo list</title>
+	<title>Imagine</title>
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<!-- Compiled and minified CSS -->
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+
+ 	<!-- Compiled and minified JavaScript -->
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+ 
+ 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ 
+ 	<link rel="stylesheet" href="@routes.Assets.at("/stylesheets/main.css")">
+ 	@helper.requireJs(core = routes.Assets.at("/vendor/requirejs/require.js").url, module = routes.Assets.at("/javascripts/main.js").url)
 </head>
-<body>
-<h2>Imagine service!</h2>
+<body ng-controller="MainCtrl">
+	<nav class="purple lighten-1" role="navigation">
+	    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">Imagine</a>
+	      <ul class="right hide-on-med-and-down">
+	        <li ng-show="loginedToFb"><div class="btn-flat white-text" ng-click="logoutFromFb()">Logout</div></li>
+	      </ul>
+	    </div>
+  </nav>
+	<div  ng-switch="loginedToFb">
+		<div ng-switch-when="true">
+			<div class="container">
+				<br><br>
+				<div class="row center">
+						<a type="file" ngf-select="uploadImage($file)" class="waves-effect waves-light btn-large center-align"><i class="material-icons right">add</i>Add image</a>
+				</div>
+			</div>
+		</div>
+		<div ng-switch-default>
+			<start-screen></start-screen>
+		</div>
+	</div>
+	<footer class="page-footer purple lighten-1">
+	<div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="https://www.facebook.com/sergiy.dakhniy">Sergiy Dakhniy</a>
+      </div>
+    </div>
+    </footer>
 </body>
 </html>

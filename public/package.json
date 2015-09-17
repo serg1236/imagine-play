@@ -1,0 +1,12 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "dependencies":{
+    "gulp": "^3.8.11",
+    "gulp-sass": "^1.3.3",
+    "gulp-concat":"*"
+  }
+}

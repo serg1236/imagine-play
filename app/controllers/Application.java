@@ -1,5 +1,6 @@
 package controllers;
 
+import imagine.utils.JsonUtils;
 import imagine.utils.PersistenceUtils;
 
 import java.io.File;
@@ -10,6 +11,8 @@ import models.User;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import play.*;
 import play.mvc.*;
@@ -35,15 +38,25 @@ public class Application extends Controller {
 //    		Logger.error(e.getMessage());
 //    	}
     	//User user = JPA.em().find(User.class,1);
-    	User user = new User();
-    	user.setFbLogin("11112");
-    	PersistenceUtils.saveUser(user);
-    	Logger.info(PersistenceUtils.isUserExists("11112")+"");
-    	user.setFbLogin("11117");
-    	PersistenceUtils.saveUser(user);
-    	Logger.info(PersistenceUtils.isUserExists("11112")+"");
-    	
         return ok(index.render());
+    }
+    
+    public static Result auth(){
+    	User user = null;
+    	JsonNode json = request().body().asJson();
+    	try {
+			user = JsonUtils.jsonToObject(json, User.class);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+    	if(!PersistenceUtils.isUserExists(user)){
+    		PersistenceUtils.saveUser(user);
+    	}else{
+    		user = PersistenceUtils.getUser(user.getFbId());
+    	}
+    	String userString = JsonUtils.objectToJson(user).toString();
+    	Logger.info(userString);
+    	return ok(userString);
     }
 
 }

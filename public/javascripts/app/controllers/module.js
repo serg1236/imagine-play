@@ -1,4 +1,4 @@
-define(['angular','angularCookies'], function (ng) {
+define(['angular','angularCookies','fileUpload'], function (ng) {
     'use strict';
-    return ng.module('todo.controllers', ['ngCookies']);
+    return ng.module('imagine.controllers', ['ngCookies','ngFileUpload']);
 });
