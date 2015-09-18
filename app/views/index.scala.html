@@ -27,9 +27,30 @@
 			<div class="container">
 				<br><br>
 				<div class="row center">
-						<a type="file" ngf-select="uploadImage($file)" class="waves-effect waves-light btn-large center-align"><i class="material-icons right">add</i>Add image</a>
+					<a type="file" ngf-select="uploadImage($file)" class="waves-effect waves-light btn-large center-align" accept="image/*">
+					<i class="material-icons right">add</i>Add image</a>
+				</div>
+				<div class="row center" ng-show="uploadProgress">
+					<div class="preloader-wrapper small" ng-class="{active:uploadProgress}" style="vertival-align:center">
+					    <div class="spinner-layer spinner-blue-only">
+					      <div class="circle-clipper left">
+					        <div class="circle"></div>
+					      </div><div class="gap-patch">
+					        <div class="circle"></div>
+					      </div><div class="circle-clipper right">
+					        <div class="circle"></div>
+					      </div>
+					    </div>
+					  </div>
+				</div>
+				<div class="row center" ng-show="currentUser.images.length<=0||!currentUser.images">
+					<h1 class="purple-text text-lighten-3">No images yet...</h1>
 				</div>
 			</div>
+			
+			<image-list images="currentUser.images">
+			</image-list>
+			
 		</div>
 		<div ng-switch-default>
 			<start-screen></start-screen>

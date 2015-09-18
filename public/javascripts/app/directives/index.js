@@ -1,3 +1,4 @@
 define([
-    './start-screen'
+    './start-screen',
+    './image-list'
 ], function () {});

@@ -1,0 +1,6 @@
+<div class="row">
+	<div class="col l3 m4 s12 image-wrapper" ng-repeat="image in images track by $index">
+		<img class="responsive-img hoverable content-image" ng-src="{{image.url}}"/>
+		<a class="btn-floating waves-effect waves-light black delete-button" ng-click="deleteImage($index)"><i class="material-icons white-text">close</i></a>
+	</div>
+</div>

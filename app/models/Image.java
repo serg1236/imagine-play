@@ -6,19 +6,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
+@NamedQuery(query="Delete from Image image Where image.url = :url", name="delete image")
 public class Image {
 	@Id
 	@GeneratedValue
 	private int id;
 	private String url;
 	@ManyToOne
+	@JsonIgnore
 	private User author;
 	@OneToMany
 	private List<User> liked;
-	
 	@OneToMany(mappedBy="image")
 	private List<Comment> comments;
 	

@@ -1,7 +1,11 @@
 package models;
 
+import imagine.utils.PersistenceUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +33,7 @@ public class User {
 	@JsonProperty("id")
 	private String fbId;
 	
-	@OneToMany(mappedBy="author")
+	@OneToMany(mappedBy="author", cascade=CascadeType.REMOVE)
 	private List<Image> images;
 	
 	@JsonProperty("first_name")
@@ -72,6 +76,17 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", fbId=" + fbId + ", images=" + images
 				+ ", firstName=" + firstName + ", lastName=" + lastName + "]";
+	}
+	
+	public void addImage(String imageUrl){
+		Image image = new Image();
+		image.setAuthor(this);
+		image.setUrl(imageUrl);
+		if(getImages()==null){
+			setImages(new ArrayList<Image>());
+		}
+		images.add(image);
+		PersistenceUtils.save(image);
 	}
 	
 	
