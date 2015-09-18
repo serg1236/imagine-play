@@ -15,14 +15,18 @@
  	@helper.requireJs(core = routes.Assets.at("/vendor/requirejs/require.js").url, module = routes.Assets.at("/javascripts/main.js").url)
 </head>
 <body ng-controller="MainCtrl">
-	<nav class="purple lighten-1" role="navigation">
-	    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">Imagine</a>
-	      <ul class="right hide-on-med-and-down">
-	        <li ng-show="loginedToFb"><div class="btn-flat white-text" ng-click="logoutFromFb()">Logout</div></li>
-	      </ul>
-	    </div>
-  </nav>
-	<div  ng-switch="loginedToFb">
+	<div id="page" class="no-display">
+	<header>
+		<nav class="purple lighten-1" role="navigation">
+		    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">Imagine<span ng-show="loginedToFb">, {{currentUser.first_name}}!</span></a>
+		      <ul class="right">
+		        <li ng-show="loginedToFb"><div class="btn-flat white-text" ng-click="logoutFromFb()">Logout</div></li>
+		      </ul>
+		    </div>
+	
+	  </nav>
+	</header>
+	<main  ng-switch="loginedToFb">
 		<div ng-switch-when="true">
 			<div class="container">
 				<br><br>
@@ -55,7 +59,7 @@
 		<div ng-switch-default>
 			<start-screen></start-screen>
 		</div>
-	</div>
+	</main>
 	<footer class="page-footer purple lighten-1">
 	<div class="footer-copyright">
       <div class="container">
@@ -63,5 +67,23 @@
       </div>
     </div>
     </footer>
+    </div>
+    <div id="preloader" class="main-preloader">
+    	<div class="container">
+    		<div class="row center">
+   				<div class="preloader-wrapper large active" style="vertival-align:center">
+				    <div class="spinner-layer spinner-blue-only">
+				      <div class="circle-clipper left">
+				        <div class="circle"></div>
+				      </div><div class="gap-patch">
+				        <div class="circle"></div>
+				      </div><div class="circle-clipper right">
+				        <div class="circle"></div>
+				      </div>
+				    </div>
+				  </div>
+    		</div>
+    	</div>
+    </div>
 </body>
 </html>

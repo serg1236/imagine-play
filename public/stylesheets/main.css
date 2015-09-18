@@ -12,3 +12,25 @@
 	position: relative; 
 	z-index: 1;
 }
+
+.no-display{
+	display:none;
+}
+
+.main-preloader{
+	margin-top:20%;
+}
+
+#page {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  
+#page.no-display{
+	display:none;
+}
+
+main {
+   flex: 1 0 auto;
+ }

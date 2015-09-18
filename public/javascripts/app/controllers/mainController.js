@@ -11,6 +11,9 @@ define(['./module'],function(controllers){
 				initUser();
 				$scope.loginedToFb = true;
 			}
+			//angular loading hack
+			$("#page").removeClass("no-display");
+			$("#preloader").addClass("no-display");
 		});
 		
 		$scope.loginToFb = function(){
@@ -51,7 +54,7 @@ define(['./module'],function(controllers){
 	              })
 	              .error(function(){
 	            	  $scope.uploadProgress = false;
-	            	  Materialize.toast("Sorry, something wrong:(", 1000);
+	            	  Materialize.toast("Sorry, something wrong:(", 2000);
 	              });
 			}
 		};
