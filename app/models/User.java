@@ -78,10 +78,11 @@ public class User {
 				+ ", firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
 	
-	public void addImage(String imageUrl){
+	public void addImage(String imageUrl, String publicId){
 		Image image = new Image();
 		image.setAuthor(this);
 		image.setUrl(imageUrl);
+		image.setPublicId(publicId);
 		if(getImages()==null){
 			setImages(new ArrayList<Image>());
 		}

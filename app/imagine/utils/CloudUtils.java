@@ -18,22 +18,23 @@ public class CloudUtils {
 			  "api_secret", "P1UZxaCJmpnPeAAFvl7bxOqqGHw"));
 	
 	
-	//returns image url
-	public static String uploadImage(File image, int width, int height){
-		String url = null;
+	public static Map uploadImage(File image, int width, int height){
+		Map uploadResult = null;
 		try{
-			Map uploadResult = cloudinary.uploader().upload(image,
+			uploadResult = cloudinary.uploader().upload(image,
 					ObjectUtils.asMap("transformation",new Transformation().crop("pad").width(width).height(height).background("black")));
-			url = (String) uploadResult.get("url");
-			Logger.info(url);
 		}catch(IOException e){
 			Logger.error(e.getMessage());
 		}
-		return url;
+		return uploadResult;
 	}
 	
 	//default sized upload
-	public static String uploadImage(File image){
+	public static Map uploadImage(File image){
 		return uploadImage(image, 500, 500);
+	}
+	
+	public static void deleteImage(String publicId) throws IOException{
+		cloudinary.uploader().destroy(publicId, ObjectUtils.asMap("invalidate", true));
 	}
 }

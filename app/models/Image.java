@@ -10,6 +10,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @NamedQuery(query="Delete from Image image Where image.url = :url", name="delete image")
@@ -18,6 +19,9 @@ public class Image {
 	@GeneratedValue
 	private int id;
 	private String url;
+	
+	@JsonProperty("public_id")
+	private String publicId;
 	@ManyToOne
 	@JsonIgnore
 	private User author;
@@ -56,6 +60,12 @@ public class Image {
 	}
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
+	}
+	public String getPublicId() {
+		return publicId;
+	}
+	public void setPublicId(String publicId) {
+		this.publicId = publicId;
 	}
 	
 }

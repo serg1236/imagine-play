@@ -70,7 +70,7 @@ public class Application extends Controller {
     	MultipartFormData body = request().body().asMultipartFormData();
     	FilePart imagePart = body.getFile("file");   	
     	File image = imagePart.getFile();
-    	String url = CloudUtils.uploadImage(image);
+    	Map uploadResult = CloudUtils.uploadImage(image);
     	String userString = body.asFormUrlEncoded().get("user")[0];
     	User user = null;
 		try {
@@ -79,7 +79,7 @@ public class Application extends Controller {
 			Logger.error(e.getMessage());
 		}
     	user = PersistenceUtils.getUser(user.getFbId());
-    	user.addImage(url);
+    	user.addImage(uploadResult.get("url").toString(),uploadResult.get("public_id").toString());
     	PersistenceUtils.save(user);
     	userString = JsonUtils.objectToJson(user).toString();
     	Logger.info(userString);
@@ -89,8 +89,14 @@ public class Application extends Controller {
     public static Result deleteImage(){
     	JsonNode json = request().body().asJson();
     	String url = json.get("url").asText();
+    	String publicId = json.get("public_id").asText();
     	Logger.info("DELETE: "+url);
-    	PersistenceUtils.deleteImage(url);
+    	try {
+			CloudUtils.deleteImage(publicId);
+			PersistenceUtils.deleteImage(url);
+		} catch (IOException e) {
+			Logger.error(e.getMessage());
+		}
     	return ok("Ok");
     }
 

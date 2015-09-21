@@ -14,6 +14,7 @@ define(['./module'],function(controllers){
 			//angular loading hack
 			$("#page").removeClass("no-display");
 			$("#preloader").addClass("no-display");
+			initOtherUsers();
 		});
 		
 		$scope.loginToFb = function(){
@@ -22,7 +23,7 @@ define(['./module'],function(controllers){
 				if(loginPromise.status==="connected"){
 					$scope.loginedToFb = true;
 					initUser();
-					
+					initOtherUsers();
 				}
 			});
 		};
@@ -71,6 +72,11 @@ define(['./module'],function(controllers){
 					  $scope.currentUser = response.data;
 				  });			  
 				});
+		}
+		
+		function initOtherUsers(){
+			$(".button-collapse").sideNav();
+			console.log($(".button-collapse").html());
 		}
 		
 	}]);
