@@ -6,8 +6,10 @@ import imagine.utils.PersistenceUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
+import models.Image;
 import models.User;
 
 import com.cloudinary.Cloudinary;
@@ -15,6 +17,7 @@ import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import play.*;
 import play.mvc.*;
@@ -31,19 +34,16 @@ import play.db.jpa.Transactional;
 public class Application extends Controller {
 
     public static Result index() {
-//    	Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-//    			  "cloud_name", "dmqpxg0wn",
-//    			  "api_key", "812128952259734",
-//    			  "api_secret", "P1UZxaCJmpnPeAAFvl7bxOqqGHw"));
-//    	try{
-//	    	File toUpload = new File("Hello-World.png");
-//	    	Map uploadResult = cloudinary.uploader().upload(toUpload,
-//	    			ObjectUtils.asMap("public_id","sample1"));
-//	    	Logger.info((String) uploadResult.get("url"));
-//    	}catch(IOException e){
-//    		Logger.error(e.getMessage());
-//    	}
-    	//User user = JPA.em().find(User.class,1);
+    	Image image = PersistenceUtils.getImage("bl0nmw5qephgnkzkanxh");
+    	JsonNode imageNode = JsonUtils.objectToJson(image);
+    	Logger.info(imageNode.toString());
+    	try{
+    		Image im2 = JsonUtils.jsonToObject(imageNode, Image.class);
+    		Logger.info(im2.getAuthor().getFirstName());
+    	}catch(IOException e){
+    		
+    	}
+       	
         return ok(index.render());
     }
     
@@ -88,6 +88,7 @@ public class Application extends Controller {
     
     public static Result deleteImage(){
     	JsonNode json = request().body().asJson();
+    	Logger.info(json.toString());
     	String url = json.get("url").asText();
     	String publicId = json.get("public_id").asText();
     	Logger.info("DELETE: "+url);
@@ -97,6 +98,39 @@ public class Application extends Controller {
 		} catch (IOException e) {
 			Logger.error(e.getMessage());
 		}
+    	return ok("Ok");
+    }
+    
+    public static Result getUsers(){
+    	JsonNode json = request().body().asJson();
+    	String userFbId = json.get("id").asText();
+    	List<User> users = PersistenceUtils.getUserList(userFbId);
+    	String usersString = JsonUtils.objectToJson(users).toString();
+    	return ok(usersString);
+    }
+    
+    public static Result getUser(){
+    	User user = null;
+    	JsonNode json = request().body().asJson();
+    	Logger.info(json.toString());
+    	String userId = json.get("id").asText();
+    	user = PersistenceUtils.getUser(userId);
+    	String userString = JsonUtils.objectToJson(user).toString();
+    	return ok(userString);
+    }
+    
+    public static Result getImage(){
+    	Image image = null;
+    	JsonNode json = request().body().asJson();
+    	Logger.info(json.toString());
+    	String imageId = json.get("id").asText();
+    	image = PersistenceUtils.getImage(imageId);
+    	String userString = JsonUtils.objectToJson(image).toString();
+    	return ok(userString);
+    }
+    
+    public static Result toggleLike(){
+    	
     	return ok("Ok");
     }
 

@@ -1,10 +1,11 @@
 define(['./module'],function(services){
-	services.factory('fb',['$q',function($q){
+	services.factory('fb',['$q','userService',function($q,userService){
 		
 		return {
 			login: login,
 			logout:logout,
-			getStatus: init
+			getStatus: init,
+			getUserInfo:getUserInfo
 		};
 		
 		function login(){
@@ -56,6 +57,17 @@ define(['./module'],function(services){
 			FB.getLoginStatus(function(response) {
 				deferred.resolve("Ok");
 				deferred.promise.status = response.status;
+			});
+			return deferred.promise;
+		}
+		//gets info from FB authenticate to the app
+		function getUserInfo(fields){
+			var deferred = $q.defer();
+			FB.api('/me', {fields: fields}, function(response) {
+				 userService.authUser(response).then(function(userResp){
+					  deferred.promise.user = userResp.data;
+					  deferred.resolve("Ok");
+				  });			  
 			});
 			return deferred.promise;
 		}

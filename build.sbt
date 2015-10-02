@@ -17,5 +17,3 @@ libraryDependencies += "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
 libraryDependencies += "org.hibernate" % "hibernate-entitymanager" % "4.1.3.Final"
 
 requireJs += "main.js"
-
-fork in run := true

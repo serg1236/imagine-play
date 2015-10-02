@@ -1,11 +1,12 @@
 define(['./module'],function(directives){
-	directives.directive('imageList',['$http', function($http){
+	directives.directive('imageList',['imageService', function(imageService){
 
 		  return{
 		    restrict: 'E',
 		    templateUrl: '/assets/javascripts/app/directives/image-list.html',
 		    scope:{
-		    	images: '=images'
+		    	images: '=images',
+		    	editable: '='
 		    },
 		    link: function(scope, element, attr){
 		    	
@@ -13,11 +14,7 @@ define(['./module'],function(directives){
 					var image = scope.images[index];
 					console.log("here");
 					if(image){
-						$http({
-							url:'/delete-image',
-							method:'POST',
-							data:image
-						}).then(function(response){
+						imageService.deleteImage(image).then(function(response){
 							scope.images.splice(index,1);
 						})
 					}

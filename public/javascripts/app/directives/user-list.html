@@ -1,0 +1,5 @@
+<div class="collection with-header">
+	<div class="collection-header purple-text" ng-click="log()"><h5>Other imaginations:</h5></div>
+	<a href="#/imaginations/{{user.id}}" class="collection-item purple-text text-lighten-3" ng-repeat="user in users track by $index">
+	{{user.first_name}} {{user.last_name}}</a>
+</div>

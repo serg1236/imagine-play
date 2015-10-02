@@ -1,0 +1,8 @@
+<div class="row center">
+	<h3 class="purple-text text-lighten-1" ng-show="user.images.length>0">This is how {{user.first_name}} imagine it:</h3>
+</div>
+<div class="row center" ng-show="user.images.length<=0||!user.images">
+	<h1 class="purple-text text-lighten-3">No images yet from {{user.first_name}}...</h1>
+</div>
+<image-list images="user.images" editable="false">
+</image-list>

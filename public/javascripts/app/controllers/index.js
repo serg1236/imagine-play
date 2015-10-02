@@ -1,3 +1,6 @@
 define([
-    './mainController'
+    './mainController',
+    './homeController',
+    './imaginationController',
+    './imageController'
 ], function () {});

@@ -11,6 +11,14 @@ POST 	/upload-image				controllers.Application.uploadImage()
 
 POST	/delete-image				controllers.Application.deleteImage()
 
+POST	/user-list					controllers.Application.getUsers()
+
+POST	/get-user					controllers.Application.getUser()
+
+POST	/get-image					controllers.Application.getImage()
+
+POST	/toggle-like				controllers.Application.toggleLike()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 

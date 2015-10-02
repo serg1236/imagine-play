@@ -10,18 +10,26 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name="customer")
-@NamedQuery(query="Select user from User user Where user.fbId = :login", name="get user by login")
+@NamedQueries({
+	@NamedQuery(query="Select user from User user Where user.fbId = :login", name="get user by login"),
+	@NamedQuery(query="Select user from User user Where user.fbId != :excludedUser", name="get user list")
+})
 @JsonIgnoreProperties(ignoreUnknown=true)
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class User {
 	
 	@GeneratedValue

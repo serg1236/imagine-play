@@ -5,6 +5,7 @@ require.config({
 		
 		angular: '../vendor/angular/angular',
 		angularCookies: '../vendor/angular/angular-cookies',
+		angularRoute: '../vendor/angular/angular-route.min',
 		domReady: '../vendor/requirejs/domReady',
 		fileUpload: '../vendor/ng-file-upload/ng-file-upload.min'
 	}, 
@@ -17,6 +18,11 @@ require.config({
 		angularCookies:{
 			deps: ['angular']
 		},
+		
+		angularRoute:{
+			deps: ['angular']
+		},
+		
 		fileUpload:{
 			deps: ['angular']
 		}

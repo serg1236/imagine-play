@@ -1,6 +1,8 @@
 package imagine.utils;
 
 
+import java.util.List;
+
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -37,6 +39,22 @@ public class PersistenceUtils {
 		Logger.info("after query");
 		query.setParameter("url", url);
 		query.executeUpdate();
+	}
+	
+	public static List<User> getUserList(String excludedUser){
+		List<User> users = null;
+		TypedQuery<User> query = JPA.em().createNamedQuery("get user list", User.class);
+		query.setParameter("excludedUser", excludedUser);
+		users = query.getResultList();
+		return users;
+	}
+	
+	public static Image getImage(String publicId){
+		Image image = null;
+		TypedQuery<Image> query = JPA.em().createNamedQuery("get image", Image.class);
+		query.setParameter("id", publicId);
+		image = query.getSingleResult();
+		return image;
 	}
 
 }

@@ -1,2 +1,2 @@
-define([ './fbService','./taskListService'
+define([ './fbService','./imageService','./userService'
 ], function () {});

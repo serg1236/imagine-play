@@ -19,9 +19,10 @@
 	 
 	<header>
 		<nav class="purple lighten-1" role="navigation">
-		    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">Imagine<span ng-show="loginedToFb">, {{currentUser.first_name}}!</span></a>
-		      <ul class="right">
-		        <li ng-show="loginedToFb"><div class="btn-flat white-text" ng-click="logoutFromFb()">Logout</div></li>
+		    <div class="nav-wrapper container"><a id="logo-container" href="#/" class="brand-logo">Imagine<span ng-show="loginedToFb">, {{currentUser.first_name}}!</span></a>
+		      <ul class="right" ng-show="loginedToFb">
+		        <li ><a class="btn-flat white-text" ng-click="logoutFromFb()">Logout</a></li>
+		        <!-- <li ><a ng-click="logoutFromFb()" class="cursor-pointer"><i class="material-icons">person_pin</i></a></li> -->
 		      </ul>
 		    </div>
 	
@@ -31,40 +32,17 @@
 		<div ng-switch-when="true">
 			<!-- <div class="container"> -->
 			<div class="row">
-				<div class="col s10">
+				<div class="col s12 m8 l9">
 					<br><br>
-					<div class="row center">
-						<a type="file" ngf-select="uploadImage($file)" class="waves-effect waves-light btn-large center-align" accept="image/*">
-						<i class="material-icons right">add</i>Add image</a>
-					</div>
-					<div class="row center" ng-show="uploadProgress">
-						<div class="preloader-wrapper small" ng-class="{active:uploadProgress}" style="vertival-align:center">
-						    <div class="spinner-layer spinner-blue-only">
-						      <div class="circle-clipper left">
-						        <div class="circle"></div>
-						      </div><div class="gap-patch">
-						        <div class="circle"></div>
-						      </div><div class="circle-clipper right">
-						        <div class="circle"></div>
-						      </div>
-						    </div>
-						  </div>
-					</div>
-					<div class="row center" ng-show="currentUser.images.length<=0||!currentUser.images">
-						<h1 class="purple-text text-lighten-3">No images yet...</h1>
-					</div>
+					<div ng-view></div> 
 				</div>
-				<div class="col s2">
-					<ul>
-						<li>One</li>
-						<li>Two</li>
-					</ul>
+				<!-- TODO: move to directive -->
+				<div class="user-list col l3 m4 s12">
+					<user-list exclude="currentUser"></user-list>
 				</div>
 			</div>
 	
 			
-			<image-list images="currentUser.images">
-			</image-list>
 			
 		</div>
 		<div ng-switch-default>

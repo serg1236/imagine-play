@@ -6,14 +6,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
-@NamedQuery(query="Delete from Image image Where image.url = :url", name="delete image")
+@NamedQueries({
+	@NamedQuery(query="Delete from Image image Where image.url = :url", name="delete image"),
+	@NamedQuery(query="Select image from Image image Where image.publicId = :id", name="get image")
+})
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Image {
 	@Id
 	@GeneratedValue
@@ -23,7 +31,6 @@ public class Image {
 	@JsonProperty("public_id")
 	private String publicId;
 	@ManyToOne
-	@JsonIgnore
 	private User author;
 	@OneToMany
 	private List<User> liked;

@@ -1,0 +1,19 @@
+<div class="container">
+	<div class="row">
+		<div class="col l6 m8 s12 image-wrapper">
+			<img class="responsive-img content-image materialboxed" ng-src="{{image.url}}"/>
+		</div>
+		<div class="col l6 m4 s12">
+			<div class="card purple darken-1">
+				<div class="card-content white-text">
+					<h5>Author: <a class="orange-text" href="#/imaginations/{{image.author.id}}">
+					{{image.author.first_name}} {{image.author.last_name}}</a></h5>
+					<h5>{{image.liked.length}}<i class="material-icons">grade</i> </h5>
+					<span class="card-title">Comments</span>
+					<p>I am a very simple card. I am good at containing small bits of information.
+              I am convenient because I require little markup to use effectively.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

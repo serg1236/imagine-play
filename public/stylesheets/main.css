@@ -35,3 +35,11 @@ main {
    flex: 1 0 auto;
  }
  
+ .stretch-vertically{
+ 	height: 100%;
+ }
+ 
+ .cursor-pointer{
+ 	cursor: pointer;
+ }
+ 

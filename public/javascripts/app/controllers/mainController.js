@@ -1,9 +1,9 @@
 define(['./module'],function(controllers){
 	'use strict';
-	controllers.controller('MainCtrl', ['$scope','$cookies','$http','fb','Upload', function($scope,$cookies,$http,fb,Upload){
+	controllers.controller('MainCtrl', ['$scope','$timeout','$http','fb','imageService', function($scope, $timeout, $http, fb, imageService){
 		$scope.loginedToFb = false;
 		$scope.currentUser = {};
-		$scope.uploadProgress = false;
+		
 		var statusPromise = fb.getStatus();
 		statusPromise.then(function(resolve){
 			console.log(statusPromise.status);
@@ -14,7 +14,6 @@ define(['./module'],function(controllers){
 			//angular loading hack
 			$("#page").removeClass("no-display");
 			$("#preloader").addClass("no-display");
-			initOtherUsers();
 		});
 		
 		$scope.loginToFb = function(){
@@ -23,7 +22,6 @@ define(['./module'],function(controllers){
 				if(loginPromise.status==="connected"){
 					$scope.loginedToFb = true;
 					initUser();
-					initOtherUsers();
 				}
 			});
 		};
@@ -35,49 +33,22 @@ define(['./module'],function(controllers){
 		};
 		
 		
-		//TODO: move to service
-		$scope.uploadImage = function(image){
-			if (image && !image.$error){
-				image.upload = Upload.upload({
-	                url: '/upload-image',
-	                file: image,
-	                fields:{
-	                	user:$scope.currentUser
-	                }
-	              })
-	              .progress(function(){
-	                	$scope.uploadProgress = true;
-	                })
-	              .success(function(data){
-	            	  console.log(data)
-	            	  $scope.currentUser = data;
-	            	  $scope.uploadProgress = false;
-	              })
-	              .error(function(){
-	            	  $scope.uploadProgress = false;
-	            	  Materialize.toast("Sorry, something wrong:(", 2000);
-	              });
-			}
-		};
+		
 		
 		
 		
 		function initUser(){
-			FB.api('/me', {fields: ['id','first_name','last_name']}, function(response) {
-				  $http({
-					  url: '/auth',
-					  method: 'POST',
-					  data: response
-				  }).then(function(response){
-					  $scope.currentUser = response.data;
+			var userPromise = fb.getUserInfo(['id','first_name','last_name']);
+			userPromise.then(function(){
+					  $scope.currentUser = userPromise.user;
+					  $timeout(function(){
+						  $scope.$broadcast('UserInit');
+					  });
+					  
 				  });			  
-				});
+				
 		}
 		
-		function initOtherUsers(){
-			$(".button-collapse").sideNav();
-			console.log($(".button-collapse").html());
-		}
 		
 	}]);
 })
